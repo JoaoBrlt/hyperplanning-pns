@@ -11,12 +11,13 @@ Application for retrieving information about the availability of classrooms at P
 ## Preview
 ### Command-line interface
 
-![CLI preview](docs/preview/cli.png)
-![CLI preview](docs/preview/cli2.png)
+<img src="docs/preview/cli.png" width="500" alt="CLI preview"/>
+<img src="docs/preview/cli2.png" width="500" alt="CLI preview 2"/>
+
 ### Discord bot
 
-![Bot preview](docs/preview/bot.png)
-![Bot preview](docs/preview/bot2.png)
+<img src="docs/preview/bot.png" width="500" alt="Bot preview"/>
+<img src="docs/preview/bot2.png" width="500" alt="Bot preview 2"/>
 
 ## License
 
