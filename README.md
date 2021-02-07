@@ -21,4 +21,4 @@ Application for retrieving information about the availability of classrooms at P
 
 ## License
 
-This project is licensed under the [GNU GPLv3 License](LICENSE).
+This project is licensed under the [GNU GPLv3 License](LICENSE.md).
