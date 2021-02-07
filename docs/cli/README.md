@@ -2,6 +2,11 @@
 
 Use the application through a terminal.
 
+## Preview
+
+<img src="../preview/cli.png" width="500" alt="CLI preview"/>
+<img src="../preview/cli2.png" width="500" alt="CLI preview 2"/>
+
 ## Requirements
 
 1. Install Python 3 and pip.
@@ -60,8 +65,3 @@ python cli.py -t 5h
 | `--reload`                                       | `bool` | `reload=True`         | Force the reloading of schedules.                      |
 | `--no-reload`                                    | `bool` | `reload=True`         | Disable the reloading of schedules.                    |
 | `-v`, `--verbose`                                | `int`  | `verbose=0`           | Enable a more detailed output.                         |
-
-## Preview
-
-<img src="../preview/cli.png" width="500" alt="CLI preview"/>
-<img src="../preview/cli2.png" width="500" alt="CLI preview 2"/>
