@@ -1,4 +1,5 @@
 # Hyperplanning PNS
+
 Application for retrieving information about the availability of classrooms at Polytech Nice Sophia using the Hyperplanning system.
 
 ## Usage
@@ -9,6 +10,7 @@ Application for retrieving information about the availability of classrooms at P
 | [Discord bot](docs/bot/README.md)            | Use the application through the help of a discord bot. |
 
 ## Preview
+
 ### Command-line interface
 
 <img src="docs/preview/cli.png" width="500" alt="CLI preview"/>

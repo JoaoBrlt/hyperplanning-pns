@@ -1,5 +1,7 @@
 # Discord bot
 
+Use the application through the help of a discord bot.
+
 ## Requirements
 
 1. Install Python 3 and pip.
@@ -28,3 +30,8 @@ python bot.py
 |-------------------------------------------|--------------------------------------------------------------------------|
 | !help                                     | Shows the help message.                                                  |
 | [!hyperplanning](hyperplanning/README.md) | Shows a list of available classrooms according to the specified filters. |
+
+## Preview
+
+<img src="../preview/bot.png" width="500" alt="Bot preview"/>
+<img src="../preview/bot.png" width="500" alt="Bot preview 2"/>
