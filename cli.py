@@ -101,7 +101,7 @@ class CLI:
                             help="enable a more detailed output")
 
         # Threads.
-        parser.add_argument("-j", "--threads", type=int, default=2 * os.cpu_count(),
+        parser.add_argument("-j", "--threads", type=int, default=os.cpu_count(),
                             help="set the number of threads to use")
 
         # Parse the arguments.
@@ -138,6 +138,7 @@ class CLI:
         """
         Runs the command-line interface.
         """
+
         # Parse the arguments.
         options = CLI.__parse_arguments(sys.argv[1:])
 

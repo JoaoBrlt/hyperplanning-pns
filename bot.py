@@ -174,7 +174,7 @@ async def hyperplanning(ctx, *, options: hyperplanning_parser = hyperplanning_pa
         options["available"] = None
 
     # System.
-    options["threads"] = 2 * os.cpu_count()
+    options["threads"] = os.cpu_count()
     options["color"] = False
 
     # Get the classrooms.
