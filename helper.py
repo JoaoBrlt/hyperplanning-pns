@@ -6,6 +6,10 @@ from datetime import datetime, timedelta
 
 
 class Helper:
+    """
+    Helper for parsing and formatting.
+    """
+
     @staticmethod
     def parse_datetime(text: str):
         """
