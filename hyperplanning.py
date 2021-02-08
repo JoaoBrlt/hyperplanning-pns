@@ -13,7 +13,6 @@ from location import Location
 # Dates.
 from datetime import datetime, timedelta
 
-
 # Threading
 from threading import Thread
 from queue import Queue
@@ -21,13 +20,13 @@ from queue import Queue
 
 WORKER_NUMBER = 10
 
+
 def working(queue):
     while True:
         pack = queue.get()
         if pack is None:
-          return
+            return
         pack["classroom"].set_schedule(pack["info"])
-
 
 
 class Hyperplanning:
@@ -86,9 +85,9 @@ class Hyperplanning:
     @staticmethod
     def __load_classrooms(
         path: str,
-        sub_buildings: List[Location],
-        buildings: List[Location],
-        locations: List[Location],
+        sub_buildings: dict,
+        buildings: dict,
+        locations: dict,
         schedule_folder: str,
         schedule_url: str,
         schedule_reload: bool = True
@@ -111,7 +110,7 @@ class Hyperplanning:
         # Save the classrooms.
         classrooms = []
 
-        # Create a queue for the thread worker.
+        # Create a queue for thread workers.
         queue = Queue()
 
         for index, row in classrooms_data.iterrows():
@@ -135,20 +134,18 @@ class Hyperplanning:
             classrooms.append(classroom)
 
             # Package information for the workers.
-            queue.put( {
+            queue.put({
                 "classroom": classroom,
-                "info": {"id": row["schedule_id"], "folder": schedule_folder, "url": schedule_url, "reload": schedule_reload}
-                })
+                "info": {"id": row["schedule_id"], "folder": schedule_folder, "url": schedule_url,
+                         "reload": schedule_reload}
+            })
 
-        # Put false data in the queue to make them stop execution.
+        # Package false information to make workers stop.
         for _ in range(WORKER_NUMBER):
             queue.put(None)
-        
-        # Create the workers.
-        workers = [
-                Thread(target=working, args=(queue, ))    for _ in range(WORKER_NUMBER)
-        ]
 
+        # Create the workers.
+        workers = [Thread(target=working, args=(queue,)) for _ in range(WORKER_NUMBER)]
 
         # Start all the workers.
         for worker in workers:
@@ -157,6 +154,7 @@ class Hyperplanning:
         # Wait for all workers to finish.
         for worker in workers:
             worker.join()
+
         return classrooms
 
     @staticmethod
@@ -177,9 +175,9 @@ class Hyperplanning:
 
     @staticmethod
     def __filter_by_min_availability_duration(
-        classrooms: List[Classroom],
-        min_duration: timedelta,
-        date: datetime = datetime.now()
+            classrooms: List[Classroom],
+            min_duration: timedelta,
+            date: datetime = datetime.now()
     ):
         """
         Filters a list of classrooms by minimal availability duration.
@@ -249,20 +247,20 @@ class Hyperplanning:
         return results
 
     def get_classrooms(
-        self,
-        name: str = None,
-        floor: int = None,
-        sub_building: Location = None,
-        building: Location = None,
-        location: Location = None,
-        places: int = None,
-        outlets: int = None,
-        computers: int = None,
-        projector: bool = None,
-        audio: bool = None,
-        available: bool = True,
-        duration: timedelta = None,
-        date: datetime = datetime.now(),
+            self,
+            name: str = None,
+            floor: int = None,
+            sub_building: Location = None,
+            building: Location = None,
+            location: Location = None,
+            places: int = None,
+            outlets: int = None,
+            computers: int = None,
+            projector: bool = None,
+            audio: bool = None,
+            available: bool = True,
+            duration: timedelta = None,
+            date: datetime = datetime.now(),
     ):
         """
         Returns a filtered list of classrooms.
