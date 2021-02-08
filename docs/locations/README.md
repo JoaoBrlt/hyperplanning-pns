@@ -4,7 +4,7 @@ Available locations used to filter the classrooms.
 
 ## Map
 
-<img src="docs/locations/images/polytech-nice-sophia.png" width="500" alt="Polytech Nice Sophia"/>
+<img src="images/polytech-nice-sophia.png" width="500" alt="Polytech Nice Sophia"/>
 
 ## Available locations
 
