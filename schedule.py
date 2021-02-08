@@ -1,4 +1,4 @@
-# Files.
+# System.
 import os
 from urllib.request import urlretrieve
 
@@ -27,10 +27,8 @@ class Schedule:
         :param url: The URL pattern to download schedules.
         :param reload: Whether to force the reloading of schedules.
         """
-        # Initialize the identifier.
+        # Initialize the attributes.
         self.identifier = identifier
-
-        # Initialize the path.
         self.path = "{folder}/{identifier}.ics".format(folder=folder, identifier=identifier)
         self.url = url.format(identifier=identifier)
 

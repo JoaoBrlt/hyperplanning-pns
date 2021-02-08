@@ -3,8 +3,6 @@ import pandas as pd
 
 # Schedules.
 from schedule import Schedule
-
-# Locations.
 from location import Location
 
 # Dates.
@@ -32,11 +30,7 @@ class Classroom:
         outlets: int,
         computers: int,
         projector: bool,
-        audio: bool,
-        schedule_id: str,
-        schedule_folder: str,
-        schedule_url: str,
-        schedule_reload: bool = True
+        audio: bool
     ):
         """
         Initializes the classroom.
@@ -52,11 +46,8 @@ class Classroom:
         :param computers: The number of computers in the classroom.
         :param projector: Whether the classroom has a projector.
         :param audio: Whether the classroom has an audio system.
-        :param schedule_id: The classroom schedule identifier.
-        :param schedule_folder: The storage folder of the schedules.
-        :param schedule_url: The URL pattern to download the schedules.
-        :param schedule_reload: Whether to force the reloading of schedules.
         """
+        # Initialize the attributes.
         self.name = name
         self.description = description
         self.floor = floor
@@ -68,13 +59,13 @@ class Classroom:
         self.computers = computers
         self.projector = projector
         self.audio = audio
-        self.schedule = None #Schedule(schedule_id, schedule_folder, schedule_url, schedule_reload)
+        self.schedule = None
 
-    def set_schedule(self, info):
+    def set_schedule(self, info: dict):
         """
-        Add the schedule to the classroom.
+        Sets the classroom schedule.
 
-        :param info: A dictionnary containing the id, folder, url and reload.
+        :param info: The schedule information.
         """
         self.schedule = Schedule(info["id"], info["folder"], info["url"], info["reload"])
 

@@ -1,4 +1,4 @@
-# Environment.
+# System.
 import os
 from dotenv import load_dotenv
 
@@ -7,8 +7,6 @@ from typing import List
 
 # Hyperplanning.
 from hyperplanning import Hyperplanning
-
-# Classrooms.
 from classroom import Classroom
 
 # Dates.
@@ -154,12 +152,11 @@ class Application:
         return result
 
     @staticmethod
-    def get_classrooms(options: dict, color: bool = False):
+    def get_classrooms(options: dict):
         """
         Returns a formatted list of classrooms.
 
         :param options: The request options.
-        :param color: Whether to use color on the output.
         :return: The formatted list of classrooms.
         """
         # Load the variables.
@@ -170,11 +167,15 @@ class Application:
             os.getenv("DATA_FOLDER"),
             os.getenv("SCHEDULE_FOLDER"),
             os.getenv("SCHEDULE_URL"),
+            options["threads"],
             options["reload"]
         )
 
         # Get the description.
-        result = Application.__format_request(hyperplanning, options)
+        result = Application.__format_request(
+            hyperplanning,
+            options
+        )
 
         # Get the classrooms.
         classrooms = hyperplanning.get_classrooms(
@@ -194,6 +195,11 @@ class Application:
         )
 
         # Format the classrooms.
-        result += Application.__format_classrooms(classrooms, options["date"], options["verbose"], color)
+        result += Application.__format_classrooms(
+            classrooms,
+            options["date"],
+            options["verbose"],
+            options["color"]
+        )
 
         return result

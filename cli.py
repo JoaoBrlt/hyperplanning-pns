@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# System.
+import os
+
 # Arguments.
 import sys
 import argparse
@@ -97,6 +100,10 @@ class CLI:
         parser.add_argument('-v', '--verbose', action='count', default=0,
                             help="enable a more detailed output")
 
+        # Threads.
+        parser.add_argument("-j", "--threads", type=int, default=2 * os.cpu_count(),
+                            help="set the number of threads to use")
+
         # Parse the arguments.
         return vars(parser.parse_args(arguments))
 
@@ -135,7 +142,7 @@ class CLI:
         options = CLI.__parse_arguments(sys.argv[1:])
 
         # Get the classrooms.
-        result = Application.get_classrooms(options, options["color"])
+        result = Application.get_classrooms(options)
 
         # Print the classrooms.
         print(result)

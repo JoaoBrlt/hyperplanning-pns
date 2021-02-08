@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Environment.
+# System.
 import os
 from dotenv import load_dotenv
 
@@ -154,27 +154,31 @@ async def hyperplanning(ctx, *, options: hyperplanning_parser = hyperplanning_pa
     """
     Shows a list of available classrooms according to the specified filters.
     """
-    # Default the arguments.
+    # Default.
     for name in hyperplanning_parser.arguments.keys():
         if name not in options:
             options[name] = None
 
-    # Parse the date.
+    # Date.
     if options["date"] is not None:
         options["date"] = Helper.parse_datetime(options["date"])
     else:
         options["date"] = datetime.now()
 
-    # Parse the duration.
+    # Duration.
     if options["duration"] is not None:
         options["duration"] = Helper.parse_duration(options["duration"])
 
-    # Manage the availability.
+    # Availability.
     if options["all"]:
         options["available"] = None
 
+    # System.
+    options["threads"] = 2 * os.cpu_count()
+    options["color"] = False
+
     # Get the classrooms.
-    result = Application.get_classrooms(options, False)
+    result = Application.get_classrooms(options)
 
     # Send the classrooms.
     await ctx.send(result[:2000])

@@ -6,8 +6,6 @@ from typing import List
 
 # Classrooms.
 from classroom import Classroom
-
-# Locations.
 from location import Location
 
 # Dates.
@@ -18,29 +16,26 @@ from threading import Thread
 from queue import Queue
 
 
-WORKER_NUMBER = 10
-
-
-def working(queue):
-    while True:
-        pack = queue.get()
-        if pack is None:
-            return
-        pack["classroom"].set_schedule(pack["info"])
-
-
 class Hyperplanning:
     """
     Represents the schedule system of the school.
     """
 
-    def __init__(self, data_folder: str, schedule_folder: str, schedule_url: str, schedule_reload: bool = True):
+    def __init__(
+        self,
+        data_folder: str,
+        schedule_folder: str,
+        schedule_url: str,
+        schedule_workers: int = 1,
+        schedule_reload: bool = True
+    ):
         """
         Initializes the hyperplanning.
 
         :param data_folder: The storage folder of the data files.
         :param schedule_folder: The storage folder of the schedules.
         :param schedule_url: The URL pattern to download the schedules.
+        :param schedule_workers: The number of workers to download the schedules.
         :param schedule_reload: Whether to force the reloading of schedules.
         """
         # Load the locations.
@@ -56,6 +51,7 @@ class Hyperplanning:
             self.locations,
             schedule_folder,
             schedule_url,
+            schedule_workers,
             schedule_reload
         )
 
@@ -90,6 +86,7 @@ class Hyperplanning:
         locations: dict,
         schedule_folder: str,
         schedule_url: str,
+        schedule_workers: int = 1,
         schedule_reload: bool = True
     ):
         """
@@ -114,6 +111,7 @@ class Hyperplanning:
         queue = Queue()
 
         for index, row in classrooms_data.iterrows():
+            # Create the classroom.
             classroom = Classroom(
                 row["name"],
                 row["description"],
@@ -125,37 +123,58 @@ class Hyperplanning:
                 row["outlets"],
                 row["computers"],
                 row["projector"] == "Yes",
-                row["audio"] == "Yes",
-                row["schedule_id"],
-                schedule_folder,
-                schedule_url,
-                schedule_reload
+                row["audio"] == "Yes"
             )
+
+            # Add the classroom.
             classrooms.append(classroom)
 
             # Package information for the workers.
             queue.put({
                 "classroom": classroom,
-                "info": {"id": row["schedule_id"], "folder": schedule_folder, "url": schedule_url,
-                         "reload": schedule_reload}
+                "info": {
+                    "id": row["schedule_id"],
+                    "folder": schedule_folder,
+                    "url": schedule_url,
+                    "reload": schedule_reload
+                }
             })
 
         # Package false information to make workers stop.
-        for _ in range(WORKER_NUMBER):
+        for _ in range(schedule_workers):
             queue.put(None)
 
         # Create the workers.
-        workers = [Thread(target=working, args=(queue,)) for _ in range(WORKER_NUMBER)]
+        workers = [
+            Thread(target=Hyperplanning.__load_schedule_from_queue, args=(queue,))
+            for _ in range(schedule_workers)
+        ]
 
-        # Start all the workers.
+        # Start the workers.
         for worker in workers:
             worker.start()
 
-        # Wait for all workers to finish.
+        # Wait for the workers to finish.
         for worker in workers:
             worker.join()
 
         return classrooms
+
+    @staticmethod
+    def __load_schedule_from_queue(queue: Queue):
+        """
+        Loads a classroom schedule from a worker queue.
+
+        :param queue: The worker queue.
+        """
+        while True:
+            # Get a package.
+            package = queue.get()
+            if package is None:
+                return
+
+            # Load the schedule.
+            package["classroom"].set_schedule(package["info"])
 
     @staticmethod
     def __filter_by_availability(classrooms: List[Classroom], available: bool = True, date: datetime = datetime.now()):
@@ -175,9 +194,9 @@ class Hyperplanning:
 
     @staticmethod
     def __filter_by_min_availability_duration(
-            classrooms: List[Classroom],
-            min_duration: timedelta,
-            date: datetime = datetime.now()
+        classrooms: List[Classroom],
+        min_duration: timedelta,
+        date: datetime = datetime.now()
     ):
         """
         Filters a list of classrooms by minimal availability duration.
@@ -247,20 +266,20 @@ class Hyperplanning:
         return results
 
     def get_classrooms(
-            self,
-            name: str = None,
-            floor: int = None,
-            sub_building: Location = None,
-            building: Location = None,
-            location: Location = None,
-            places: int = None,
-            outlets: int = None,
-            computers: int = None,
-            projector: bool = None,
-            audio: bool = None,
-            available: bool = True,
-            duration: timedelta = None,
-            date: datetime = datetime.now(),
+        self,
+        name: str = None,
+        floor: int = None,
+        sub_building: Location = None,
+        building: Location = None,
+        location: Location = None,
+        places: int = None,
+        outlets: int = None,
+        computers: int = None,
+        projector: bool = None,
+        audio: bool = None,
+        available: bool = True,
+        duration: timedelta = None,
+        date: datetime = datetime.now(),
     ):
         """
         Returns a filtered list of classrooms.
