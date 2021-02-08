@@ -14,6 +14,22 @@ from location import Location
 from datetime import datetime, timedelta
 
 
+# Threading
+from threading import Thread
+from queue import Queue
+
+
+WORKER_NUMBER = 10
+
+def working(queue):
+    while True:
+        pack = queue.get()
+        if pack is None:
+          return
+        pack["classroom"].set_schedule(pack["info"])
+
+
+
 class Hyperplanning:
     """
     Represents the schedule system of the school.
@@ -94,6 +110,10 @@ class Hyperplanning:
 
         # Save the classrooms.
         classrooms = []
+
+        # Create a queue for the thread worker.
+        queue = Queue()
+
         for index, row in classrooms_data.iterrows():
             classroom = Classroom(
                 row["name"],
@@ -114,6 +134,29 @@ class Hyperplanning:
             )
             classrooms.append(classroom)
 
+            # Package information for the workers.
+            queue.put( {
+                "classroom": classroom,
+                "info": {"id": row["schedule_id"], "folder": schedule_folder, "url": schedule_url, "reload": schedule_reload}
+                })
+
+        # Put false data in the queue to make them stop execution.
+        for _ in range(WORKER_NUMBER):
+            queue.put(None)
+        
+        # Create the workers.
+        workers = [
+                Thread(target=working, args=(queue, ))    for _ in range(WORKER_NUMBER)
+        ]
+
+
+        # Start all the workers.
+        for worker in workers:
+            worker.start()
+
+        # Wait for all workers to finish.
+        for worker in workers:
+            worker.join()
         return classrooms
 
     @staticmethod

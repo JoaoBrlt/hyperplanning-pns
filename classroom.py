@@ -68,7 +68,15 @@ class Classroom:
         self.computers = computers
         self.projector = projector
         self.audio = audio
-        self.schedule = Schedule(schedule_id, schedule_folder, schedule_url, schedule_reload)
+        self.schedule = None #Schedule(schedule_id, schedule_folder, schedule_url, schedule_reload)
+
+    def set_schedule(self, info):
+        """
+        Add the schedule to the classroom.
+
+        :param info: A dictionnary containing the id, folder, url and reload.
+        """
+        self.schedule = Schedule(info["id"], info["folder"], info["url"], info["reload"])
 
     def is_available(self, date: datetime = datetime.now()):
         """
