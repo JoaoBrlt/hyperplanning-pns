@@ -4,8 +4,8 @@ Use the application through the help of a discord bot.
 
 ## Preview
 
-<img src="../preview/bot.png" width="500" alt="Bot preview"/>
-<img src="../preview/bot2.png" width="500" alt="Bot preview 2"/>
+<img src="images/bot.png" width="500" alt="Bot preview"/>
+<img src="images/bot2.png" width="500" alt="Bot preview 2"/>
 
 ## Requirements
 
@@ -18,6 +18,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
 1. Create a Discord application.
 2. Create a Discord bot.
 3. Copy the Discord bot token.

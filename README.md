@@ -2,6 +2,8 @@
 
 Application for retrieving information about the availability of classrooms at Polytech Nice Sophia using the Hyperplanning system.
 
+<img src="docs/locations/images/polytech-nice-sophia.png" width="500" alt="Polytech Nice Sophia"/>
+
 ## Usage
 
 | Name                                         | Description                                            |
@@ -13,13 +15,13 @@ Application for retrieving information about the availability of classrooms at P
 
 ### Command-line interface
 
-<img src="docs/preview/cli.png" width="500" alt="CLI preview"/>
-<img src="docs/preview/cli2.png" width="500" alt="CLI preview 2"/>
+<img src="docs/cli/images/cli.png" width="500" alt="CLI preview"/>
+<img src="docs/cli/images/cli2.png" width="500" alt="CLI preview 2"/>
 
 ### Discord bot
 
-<img src="docs/preview/bot.png" width="500" alt="Bot preview"/>
-<img src="docs/preview/bot2.png" width="500" alt="Bot preview 2"/>
+<img src="docs/bot/images/bot.png" width="500" alt="Bot preview"/>
+<img src="docs/bot/images/bot2.png" width="500" alt="Bot preview 2"/>
 
 ## Contributors
 
