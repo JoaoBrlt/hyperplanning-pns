@@ -21,6 +21,11 @@ Application for retrieving information about the availability of classrooms at P
 <img src="docs/preview/bot.png" width="500" alt="Bot preview"/>
 <img src="docs/preview/bot2.png" width="500" alt="Bot preview 2"/>
 
+## Contributors
+
+- [João Brilhante](https://github.com/JoaoBrlt)
+- [Olivier Doussaud](https://github.com/Dawwen)
+
 ## License
 
-This project is licensed under the [GNU GPLv3 License](LICENSE.md).
+This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details.
