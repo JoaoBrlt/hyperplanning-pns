@@ -12,7 +12,11 @@ Use the application through a terminal.
 1. Install Python 3 and pip.
 2. Clone the repository.
 3. Move to the repository.
-4. Install the dependencies.
+4. Copy the `.env.example` file to `.env`.
+```bash
+cp .env.example .env
+```
+5. Install the dependencies.
 ```bash
 pip install -r requirements.txt
 ```
