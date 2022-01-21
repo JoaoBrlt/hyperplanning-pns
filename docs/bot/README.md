@@ -12,7 +12,11 @@ Use the application through the help of a discord bot.
 1. Install Python 3 and pip.
 2. Clone the repository.
 3. Move to the repository.
-4. Install the dependencies.
+4. Copy the `.env.example` file to `.env`.
+```bash
+cp .env.example .env
+```
+5. Install the dependencies.
 ```bash
 pip install -r requirements.txt
 ```
@@ -20,12 +24,11 @@ pip install -r requirements.txt
 ## Usage
 
 1. Create a Discord application.
-2. Create a Discord bot.
+2. Create a Discord bot associated to the Discord application.
 3. Copy the Discord bot token.
-4. Rename the `.env.example` file to `.env`.
-5. Paste the Discord bot token inside the `.env` file.
-6. Add the bot to your Discord server.
-7. Run the bot.
+4. Paste the Discord bot token inside the `.env` file.
+5. Add the bot to your Discord server.
+6. Run the bot.
 ```bash
 python bot.py
 ```
